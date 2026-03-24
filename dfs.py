@@ -1,30 +1,21 @@
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
 
-def inorder(root):
-    if not root:
-        return []
-    return inorder(root.left) + [root.value] + inorder(root.right)
+tree = {
+    1: [2, 3],
+    2: [4, 5],
+    3: [6, 7],
+    4: [],
+    5: [],
+    6: [],
+    7: []
+}
 
-def preorder(root):
-    if not root:
-        return []
-    return [root.value] + preorder(root.left) + preorder(root.right)
+def dfs(tree, node, visited):
+    visited.append(node)
 
-def postorder(root):
-    if not root:
-        return []
-    return postorder(root.left) + postorder(root.right) + [root.value]
+    for neighbor in tree[node]:
+        dfs(tree, neighbor, visited)
 
-root = Node(1)
-root.left = Node(2)
-root.right = Node(3)
-root.left.left = Node(4)
-root.left.right = Node(5)
+    return visited
 
-print("Inorder:", inorder(root))
-print("Preorder:", preorder(root))
-print("Postorder:", postorder(root))
+result = dfs(tree, 1, [])
+print("DFS Traversal:", *result)

@@ -1,33 +1,27 @@
 from collections import deque
 
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
+tree = {
+    1: [2, 3],
+    2: [4, 5],
+    3: [6, 7],
+    4: [],
+    5: [],
+    6: [],
+    7: []
+}
 
-def bfs(root):
-    if not root:
-        return []
-
-    queue = deque([root])
-    result = []
+def bfs(tree, start):
+    visited = []
+    queue = deque([start])
 
     while queue:
         node = queue.popleft()
-        result.append(node.value)
+        visited.append(node)
 
-        if node.left:
-            queue.append(node.left)
-        if node.right:
-            queue.append(node.right)
+        for neighbor in tree[node]:
+            queue.append(neighbor)
 
-    return result
+    return visited
 
-root = Node(1)
-root.left = Node(2)
-root.right = Node(3)
-root.left.left = Node(4)
-root.left.right = Node(5)
-
-print("BFS:", bfs(root))
+result = bfs(tree, 1)
+print("BFS Traversal:", *result)
